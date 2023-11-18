@@ -1,14 +1,13 @@
 package Modulos.Produtos;
 
 import Paginas.LoginPage;
+import Utils.ScreenShot;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,11 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProdutosTest {
 
     private WebDriver driver;
-    private LoginPage loginPage;
 
     @BeforeEach
-    void setupTest(){
+    void setupTest() {
         driver = WebDriverManager.chromedriver().create();
+
+        //System.setProperty("webdriver.chrome.driver", "caminho/do/chromedriver");
+
         //WebDriverManager.chromedriver().setup();
         //this.driver = new ChromeDriver();
 
@@ -29,17 +30,17 @@ public class ProdutosTest {
         driver.manage().window().maximize();
         driver.get("http://165.227.93.41/lojinha-web/v2/");
         WebElement textLogo = driver.findElement(By.id("logo-container"));
-        assertEquals("Lojinha",textLogo.getText());
+        assertEquals("Lojinha", textLogo.getText());
     }
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         driver.quit();
     }
 
     @Test
     @DisplayName("Nao e permitido registrar um produto sem um nome")
-    public void testNaoEPermitidoRegistrarProdutoSemNome(){
+    public void testNaoEPermitidoRegistrarProdutoSemNome() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -50,11 +51,13 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoSemNome");
         assertEquals("O produto precisa ter um nome", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Nao e permitido registrar um produto sem cor")
-    public void testNaoEPermitidoRegistrarProdutoSemCor(){
+    public void testNaoEPermitidoRegistrarProdutoSemCor() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -65,12 +68,13 @@ public class ProdutosTest {
                 .informarCoresProduto("")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoSemCor");
         assertEquals("O produto precisa ter uma cor", mensagemApresentada);
     }
 
     @Test
     @DisplayName("Nao e permitido registrar um produto com valor igual a zero")
-    public void testNaoEPermitidoRegistrarProdutoValorZerado(){
+    public void testNaoEPermitidoRegistrarProdutoValorZerado() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -81,11 +85,13 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoValorZerado");
         assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Nao permitido registrar produto acima de 7 mil")
-    public void testNaoPermiteProdutoValorAcimaSeteMil(){
+    public void testNaoPermiteProdutoValorAcimaSeteMil() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -96,12 +102,13 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-
-        assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00",mensagemApresentada);
+        ScreenShot.sS(driver, "testNaoPermiteProdutoValorAcimaSeteMil");
+        assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Registrando produto com dados validos")
-    public void testAdicionarProdutoValorValido(){
+    public void testAdicionarProdutoValorValido() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -112,24 +119,26 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
                 .capturaMensagemApresentada();
-
-        assertEquals("Produto adicionado com sucesso",mensagemApresentada);
+        ScreenShot.sS(driver, "testAdicionarProdutoValorValido");
+        assertEquals("Produto adicionado com sucesso", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Removendo produto")
-    public void testRemoverProduto(){
+    public void testRemoverProduto() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
                 .submeterFormularioLogin()
                 .removerProduto()
                 .capturaMensagemApresentada();
-
-        assertEquals("Produto removido com sucesso",mensagemApresentada);
+        ScreenShot.sS(driver, "testRemoverProduto");
+        assertEquals("Produto removido com sucesso", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Registrando produto com componente")
-    public void testAdicionarComponente() throws InterruptedException {
+    public void testAdicionarComponente() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -144,20 +153,41 @@ public class ProdutosTest {
                 .informaQTDComponente("1")
                 .submeterComponente()
                 .capturaMensagemApresentada();
-
-        assertEquals("Componente de produto adicionado com sucesso",mensagemApresentada);
+        ScreenShot.sS(driver, "testAdicionarComponente");
+        assertEquals("Componente de produto adicionado com sucesso", mensagemApresentada);
     }
+
     @Test
     @DisplayName("Removendo Componente")
-    public void testRemoverComponente() {
+    public void testRemoverComponente() throws IOException, InterruptedException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
                 .submeterFormularioLogin()
                 .editandoProduto()
+                .adicionarComponente()
+                .informaNomeComponente("Cabo de Forca")
+                .informaQTDComponente("1")
+                .submeterComponente()
+                .adicionarComponente()
+                .informaNomeComponente("Chave manutencao")
+                .informaQTDComponente("2")
+                .submeterComponente()
                 .removerComponente()
                 .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testRemoverComponente");
+        assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
+    }
 
-        assertEquals("Componente de produto removido com sucesso",mensagemApresentada);
+    @Test
+    @DisplayName("Fazendo Logout")
+    public void logOut() {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .logOut()
+                .verificaLogOut();
+        assertEquals("Acessar a Lojinha", mensagemApresentada);
     }
 }

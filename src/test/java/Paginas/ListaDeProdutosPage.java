@@ -10,6 +10,10 @@ public class ListaDeProdutosPage {
         this.driver = driver;
     }
 
+    public LoginPage logOut(){
+        driver.findElement(By.linkText("Sair")).click();
+        return new LoginPage(driver);
+    }
     public ListaDeProdutosPage removerProduto(){
         driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[1]/a/i")).click();
         return this;
@@ -25,5 +29,4 @@ public class ListaDeProdutosPage {
     public String capturaMensagemApresentada(){
         return driver.findElement(By.cssSelector(".toast.rounded")).getText();
     }
-
 }

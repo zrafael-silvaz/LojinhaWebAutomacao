@@ -2,6 +2,7 @@ package Paginas;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LoginPage {
     private WebDriver driver;
@@ -21,5 +22,8 @@ public class LoginPage {
     public ListaDeProdutosPage submeterFormularioLogin(){
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         return new ListaDeProdutosPage(driver);
+    }
+    public String verificaLogOut(){
+        return driver.findElement(By.cssSelector(".input-field.s12>h4")).getText();
     }
 }
