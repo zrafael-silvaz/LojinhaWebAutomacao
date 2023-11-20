@@ -7,14 +7,14 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ScreenShot {
-    public static void sS(WebDriver driver, String nomeArquivo) throws IOException {
+
+    public static void salvarScreenshot(WebDriver driver, String nomeArquivo) {
         try{
             File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             //FileUtils.copyFile(file,new File("C:\\Users\\rafae\\workspace\\EstudosTestsWeb\\LojinhaWebAutomacao2\\screenshots\\" + nomeArquivo + ".png"));
-            Files.copy(file,new File("screenshots\\" + GerenciadorDiretorios.gerenciar() + nomeArquivo + ".png"));
+            Files.copy(file,new File( GerenciadorDiretorios.gerenciar()+"\\"+ nomeArquivo + ".png"));
             System.out.println("Screenshsot capturado com sucesso!");
 
         }catch (Exception e){

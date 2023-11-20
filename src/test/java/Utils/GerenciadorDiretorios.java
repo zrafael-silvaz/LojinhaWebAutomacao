@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Stream;
 
 public class GerenciadorDiretorios {
     private static String nomeDiretorio = (LocalDate.now()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -27,9 +26,8 @@ public class GerenciadorDiretorios {
         }
     }
     private static void limparDiretorio() {
-        try (Stream<Path> paths = Files.walk(novoDiretorio)) {
-            long count = paths.count();
-            if (count > 0) {
+        try  {
+            if (Files.walk(novoDiretorio).findAny().isPresent()) {
                 Files.walk(novoDiretorio)
                         .filter(Files::isRegularFile)
                         .forEach(file -> {

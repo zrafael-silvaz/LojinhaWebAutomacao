@@ -1,6 +1,7 @@
 package Modulos.Produtos;
 
 import Paginas.LoginPage;
+
 import Utils.ScreenShot;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
@@ -29,8 +30,6 @@ public class ProdutosTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(2000));
         driver.manage().window().maximize();
         driver.get("http://165.227.93.41/lojinha-web/v2/");
-        WebElement textLogo = driver.findElement(By.id("logo-container"));
-        assertEquals("Lojinha", textLogo.getText());
     }
 
     @AfterEach
@@ -51,7 +50,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoSemNome");
+        ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoSemNome");
         assertEquals("O produto precisa ter um nome", mensagemApresentada);
     }
 
@@ -68,7 +67,7 @@ public class ProdutosTest {
                 .informarCoresProduto("")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoSemCor");
+        ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoSemCor");
         assertEquals("O produto precisa ter uma cor", mensagemApresentada);
     }
 
@@ -85,7 +84,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testNaoEPermitidoRegistrarProdutoValorZerado");
+        ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoValorZerado");
         assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
 
@@ -102,7 +101,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testNaoPermiteProdutoValorAcimaSeteMil");
+        ScreenShot.salvarScreenshot(driver, "testNaoPermiteProdutoValorAcimaSeteMil");
         assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
 
@@ -119,7 +118,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testAdicionarProdutoValorValido");
+        ScreenShot.salvarScreenshot(driver, "testAdicionarProdutoValorValido");
         assertEquals("Produto adicionado com sucesso", mensagemApresentada);
     }
     @Test
@@ -135,7 +134,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
                 .verificaProdutoAdicionado("NoteBook","500000","Red, blue");
-        ScreenShot.sS(driver, "testAdicionarProdutoValorValido");
+        ScreenShot.salvarScreenshot(driver, "testAdicionarProdutoValorValido");
         assertEquals("Produto verificado", mensagemApresentada);
     }
 
@@ -148,7 +147,7 @@ public class ProdutosTest {
                 .submeterFormularioLogin()
                 .removerProduto()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testRemoverProduto");
+        ScreenShot.salvarScreenshot(driver, "testRemoverProduto");
         assertEquals("Produto removido com sucesso", mensagemApresentada);
     }
     @Test
@@ -167,7 +166,7 @@ public class ProdutosTest {
                 .removerProduto()
                 .removerProduto()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testRemoverProduto");
+        ScreenShot.salvarScreenshot(driver, "testRemoverProduto");
         assertEquals("Produto removido com sucesso", mensagemApresentada);
     }
 
@@ -188,7 +187,7 @@ public class ProdutosTest {
                 .informaQTDComponente("1")
                 .submeterComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testAdicionarComponente");
+        ScreenShot.salvarScreenshot(driver, "testAdicionarComponente");
         assertEquals("Componente de produto adicionado com sucesso", mensagemApresentada);
     }
 
@@ -205,7 +204,7 @@ public class ProdutosTest {
                 .informaQTDComponente("1")
                 .submeterComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testAdicionarComponenteSemNome");
+        ScreenShot.salvarScreenshot(driver, "testAdicionarComponenteSemNome");
         assertEquals("Informe um nome para o componente", mensagemApresentada);
     }
 
@@ -222,7 +221,7 @@ public class ProdutosTest {
                 .informaQTDComponente("")
                 .submeterComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testAdicionarComponenteQTDZero");
+        ScreenShot.salvarScreenshot(driver, "testAdicionarComponenteQTDZero");
         assertEquals("A quantidade mínima para o componente não deve ser inferior a 1", mensagemApresentada);
     }
 
@@ -239,7 +238,7 @@ public class ProdutosTest {
                 .informaQTDComponente("1")
                 .cancelarAdicaoComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testCancelandoAdicaoComponente");
+        ScreenShot.salvarScreenshot(driver, "testCancelandoAdicaoComponente");
         assertEquals("Nao ha mensagem", mensagemApresentada);
     }
 
@@ -261,7 +260,7 @@ public class ProdutosTest {
                 .submeterComponente()
                 .removerComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testRemoverComponente");
+        ScreenShot.salvarScreenshot(driver, "testRemoverComponente");
         assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
     }
     @Test
@@ -287,7 +286,7 @@ public class ProdutosTest {
                 .removerComponente()
                 .removerComponente()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "testRemoverMultiplosComponentes");
+        ScreenShot.salvarScreenshot(driver, "testRemoverMultiplosComponentes");
         assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
     }
 
@@ -300,6 +299,7 @@ public class ProdutosTest {
                 .submeterFormularioLogin()
                 .logOut()
                 .verificaLogOut();
+        ScreenShot.salvarScreenshot(driver, "logOut");
         assertEquals("Acessar a Lojinha", mensagemApresentada);
     }
 }

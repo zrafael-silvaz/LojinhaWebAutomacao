@@ -38,7 +38,7 @@ public class LoginTest {
     public void verificaLoginPage() throws IOException {
         String element = new LoginPage(driver)
                 .verificaFormularioLogin();
-        ScreenShot.sS(driver, "verificaLoginPage");
+        ScreenShot.salvarScreenshot(driver, "verificaLoginPage");
         assertEquals("Acessar a Lojinha", element);
     }
 
@@ -50,7 +50,7 @@ public class LoginTest {
                 .informarSenha("123456")
                 .submeterFormularioLogin()
                 .verificarLogin();
-        ScreenShot.sS(driver, "submeterFormularioLogin");
+        ScreenShot.salvarScreenshot(driver, "submeterFormularioLogin");
         assertEquals("Boas vindas, rafael!", mensagemApresentada);
     }
 
@@ -62,7 +62,7 @@ public class LoginTest {
                 .informarSenha("123456")
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "submeterFormularioSemUser");
+        ScreenShot.salvarScreenshot(driver, "submeterFormularioSemUser");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
 
@@ -74,7 +74,7 @@ public class LoginTest {
                 .informarSenha("")
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "submeterFormularioLoginSemSenha");
+        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSemSenha");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
 
@@ -86,7 +86,7 @@ public class LoginTest {
                 .informarSenha("testInvalido")
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "submeterFormularioLoginSenhaInvalida");
+        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSenhaInvalida");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
 
@@ -98,7 +98,7 @@ public class LoginTest {
                 .informarSenha("testInvalido")
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
-        ScreenShot.sS(driver, "submeterFormularioLoginDadosInvalidos");
+        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginDadosInvalidos");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
 
