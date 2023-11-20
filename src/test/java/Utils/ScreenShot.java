@@ -1,7 +1,7 @@
 package Utils;
 
 import com.google.common.io.Files;
-import org.apache.commons.io.FileUtils;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +14,7 @@ public class ScreenShot {
         try{
             File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             //FileUtils.copyFile(file,new File("C:\\Users\\rafae\\workspace\\EstudosTestsWeb\\LojinhaWebAutomacao2\\screenshots\\" + nomeArquivo + ".png"));
-            Files.copy(file,new File("screenshots\\" + nomeArquivo + ".png"));
+            Files.copy(file,new File("screenshots\\" + GerenciadorDiretorios.gerenciar() + nomeArquivo + ".png"));
             System.out.println("Screenshsot capturado com sucesso!");
 
         }catch (Exception e){
@@ -22,3 +22,6 @@ public class ScreenShot {
         }
     }
 }
+
+
+

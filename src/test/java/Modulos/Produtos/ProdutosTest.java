@@ -115,12 +115,28 @@ public class ProdutosTest {
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
-                .informarValorProduto("5000")
+                .informarValorProduto("500000")
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
                 .capturaMensagemApresentada();
         ScreenShot.sS(driver, "testAdicionarProdutoValorValido");
         assertEquals("Produto adicionado com sucesso", mensagemApresentada);
+    }
+    @Test
+    @DisplayName("Vericando produto adicionado")
+    public void testVerificaProdutoAdicionado() throws IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .acessarFormAddProduto()
+                .informarNomeProduto("NoteBook")
+                .informarValorProduto("500000")
+                .informarCoresProduto("Red, blue")
+                .submeterFormularioAdicao()
+                .verificaProdutoAdicionado("NoteBook","500000","Red, blue");
+        ScreenShot.sS(driver, "testAdicionarProdutoValorValido");
+        assertEquals("Produto verificado", mensagemApresentada);
     }
 
     @Test
@@ -130,6 +146,25 @@ public class ProdutosTest {
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
                 .submeterFormularioLogin()
+                .removerProduto()
+                .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testRemoverProduto");
+        assertEquals("Produto removido com sucesso", mensagemApresentada);
+    }
+    @Test
+    @DisplayName("Removendo multiplos produtos")
+    public void testRemoverMultiplosProdutos() throws IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .acessarFormAddProduto()
+                .informarNomeProduto("Airfryer")
+                .informarValorProduto("40000")
+                .informarCoresProduto("Black, Red")
+                .submeterFormularioAdicao()
+                .navegarListaProduto()
+                .removerProduto()
                 .removerProduto()
                 .capturaMensagemApresentada();
         ScreenShot.sS(driver, "testRemoverProduto");
@@ -158,6 +193,57 @@ public class ProdutosTest {
     }
 
     @Test
+    @DisplayName("Registrando produto com componente sem um nome")
+    public void testAdicionarComponenteSemNome() throws InterruptedException, IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .editandoProduto()
+                .adicionarComponente()
+                .informaNomeComponente("")
+                .informaQTDComponente("1")
+                .submeterComponente()
+                .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testAdicionarComponenteSemNome");
+        assertEquals("Informe um nome para o componente", mensagemApresentada);
+    }
+
+    @Test
+    @DisplayName("Registrando produto com componente com quantidade zero")
+    public void testAdicionarComponenteQTDZero() throws InterruptedException, IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .editandoProduto()
+                .adicionarComponente()
+                .informaNomeComponente("Arfryer")
+                .informaQTDComponente("")
+                .submeterComponente()
+                .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testAdicionarComponenteQTDZero");
+        assertEquals("A quantidade mínima para o componente não deve ser inferior a 1", mensagemApresentada);
+    }
+
+    @Test
+    @DisplayName("Cancelando adicao de componente")
+    public void testCancelandoAdicaoComponente() throws InterruptedException, IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .editandoProduto()
+                .adicionarComponente()
+                .informaNomeComponente("Arfryer")
+                .informaQTDComponente("1")
+                .cancelarAdicaoComponente()
+                .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testCancelandoAdicaoComponente");
+        assertEquals("Nao ha mensagem", mensagemApresentada);
+    }
+
+    @Test
     @DisplayName("Removendo Componente")
     public void testRemoverComponente() throws IOException, InterruptedException {
         String mensagemApresentada = new LoginPage(driver)
@@ -176,6 +262,32 @@ public class ProdutosTest {
                 .removerComponente()
                 .capturaMensagemApresentada();
         ScreenShot.sS(driver, "testRemoverComponente");
+        assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
+    }
+    @Test
+    @DisplayName("Removendo multiplos Componentes")
+    public void testRemoverMultiplosComponentes() throws IOException, InterruptedException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .editandoProduto()
+                .adicionarComponente()
+                .informaNomeComponente("Cabo de Forca")
+                .informaQTDComponente("1")
+                .submeterComponente()
+                .adicionarComponente()
+                .informaNomeComponente("Chave manutencao")
+                .informaQTDComponente("2")
+                .submeterComponente()
+                .adicionarComponente()
+                .informaNomeComponente("Suporte Universal")
+                .informaQTDComponente("1")
+                .submeterComponente()
+                .removerComponente()
+                .removerComponente()
+                .capturaMensagemApresentada();
+        ScreenShot.sS(driver, "testRemoverMultiplosComponentes");
         assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
     }
 

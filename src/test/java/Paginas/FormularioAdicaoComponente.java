@@ -18,6 +18,10 @@ public class FormularioAdicaoComponente {
         driver.findElement(By.id("componentequantidadeadicionar")).sendKeys(qtdComponente);
         return this;
     }
+    public FormularioEdicaoProdutoPage cancelarAdicaoComponente(){
+        driver.findElement(By.linkText("CANCELAR")).click();
+        return new FormularioEdicaoProdutoPage(driver);
+    }
     public FormularioEdicaoProdutoPage submeterComponente() throws InterruptedException {
         Thread.sleep(4000);
         driver.findElement(By.linkText("SALVAR COMPONENTE")).click();

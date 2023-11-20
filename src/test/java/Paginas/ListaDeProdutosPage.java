@@ -14,6 +14,9 @@ public class ListaDeProdutosPage {
         driver.findElement(By.linkText("Sair")).click();
         return new LoginPage(driver);
     }
+    public String verificarLogin(){
+        return driver.findElement(By.cssSelector("#nav-mobile > li:nth-child(1) > a")).getText();
+    }
     public ListaDeProdutosPage removerProduto(){
         driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[1]/a/i")).click();
         return this;
