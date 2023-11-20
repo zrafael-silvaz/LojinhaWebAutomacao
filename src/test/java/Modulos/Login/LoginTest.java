@@ -3,10 +3,7 @@ package Modulos.Login;
 import Paginas.LoginPage;
 import Utils.ScreenShot;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -16,15 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LoginTest {
     private WebDriver driver;
-
+    @BeforeAll
+    public static void beforeAll() throws IOException {
+        ScreenShot.criarDiretorio();
+    }
     @BeforeEach
     @DisplayName("Construe o driver e testa se esta mesmo na tela de login")
     public void setupTest() {
         driver = WebDriverManager.chromedriver().create();
-
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(4000));
         driver.manage().window().maximize();
-
         driver.get("http://165.227.93.41/lojinha-web/v2/");
     }
 
@@ -101,5 +99,16 @@ public class LoginTest {
         ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginDadosInvalidos");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
-
+    @Test
+    @DisplayName("Fazendo Logout")
+    public void logOut() {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario("rSilva")
+                .informarSenha("123456")
+                .submeterFormularioLogin()
+                .logOut()
+                .verificaLogOut();
+        ScreenShot.salvarScreenshot(driver, "logOut");
+        assertEquals("Acessar a Lojinha", mensagemApresentada);
+    }
 }

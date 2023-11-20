@@ -15,15 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Tests Web do Modulo de Produtos")
 public class ProdutosTest {
-
     private WebDriver driver;
 
+    @BeforeAll
+    public static void beforeAll() throws IOException {
+        ScreenShot.criarDiretorio();
+    }
     @BeforeEach
-    void setupTest() {
+    void setupTest() throws IOException {
         driver = WebDriverManager.chromedriver().create();
 
         //System.setProperty("webdriver.chrome.driver", "caminho/do/chromedriver");
-
         //WebDriverManager.chromedriver().setup();
         //this.driver = new ChromeDriver();
 
@@ -50,7 +52,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoSemNome");
+        ScreenShot.salvarScreenshot(driver,"testNaoEPermitidoRegistrarProdutoSemNome");
         assertEquals("O produto precisa ter um nome", mensagemApresentada);
     }
 
@@ -122,7 +124,7 @@ public class ProdutosTest {
         assertEquals("Produto adicionado com sucesso", mensagemApresentada);
     }
     @Test
-    @DisplayName("Vericando produto adicionado")
+    @DisplayName("Verificando produto adicionado")
     public void testVerificaProdutoAdicionado() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
@@ -134,7 +136,7 @@ public class ProdutosTest {
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
                 .verificaProdutoAdicionado("NoteBook","500000","Red, blue");
-        ScreenShot.salvarScreenshot(driver, "testAdicionarProdutoValorValido");
+        ScreenShot.salvarScreenshot(driver, "testVerificaProdutoAdicionado");
         assertEquals("Produto verificado", mensagemApresentada);
     }
 
@@ -166,7 +168,7 @@ public class ProdutosTest {
                 .removerProduto()
                 .removerProduto()
                 .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "testRemoverProduto");
+        ScreenShot.salvarScreenshot(driver, "testRemoverMultiplosProdutos");
         assertEquals("Produto removido com sucesso", mensagemApresentada);
     }
 
@@ -209,7 +211,7 @@ public class ProdutosTest {
     }
 
     @Test
-    @DisplayName("Registrando produto com componente com quantidade zero")
+    @DisplayName("Registrando produto e um componente com quantidade zero")
     public void testAdicionarComponenteQTDZero() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
@@ -244,7 +246,7 @@ public class ProdutosTest {
 
     @Test
     @DisplayName("Removendo Componente")
-    public void testRemoverComponente() throws IOException, InterruptedException {
+    public void testRemoverComponente() throws InterruptedException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
@@ -288,18 +290,5 @@ public class ProdutosTest {
                 .capturaMensagemApresentada();
         ScreenShot.salvarScreenshot(driver, "testRemoverMultiplosComponentes");
         assertEquals("Componente de produto removido com sucesso", mensagemApresentada);
-    }
-
-    @Test
-    @DisplayName("Fazendo Logout")
-    public void logOut() {
-        String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
-                .submeterFormularioLogin()
-                .logOut()
-                .verificaLogOut();
-        ScreenShot.salvarScreenshot(driver, "logOut");
-        assertEquals("Acessar a Lojinha", mensagemApresentada);
     }
 }
