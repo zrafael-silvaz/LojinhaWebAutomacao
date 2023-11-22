@@ -1,4 +1,4 @@
-package Utils;
+package br.com.rsilva.lojinhawebautomacao2.Utils;
 
 import com.google.common.io.Files;
 

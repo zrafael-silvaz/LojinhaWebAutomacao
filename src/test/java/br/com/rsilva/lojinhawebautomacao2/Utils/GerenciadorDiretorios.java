@@ -1,4 +1,4 @@
-package Utils;
+package br.com.rsilva.lojinhawebautomacao2.Utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +14,7 @@ public class GerenciadorDiretorios {
 
     public static Path gerenciar() throws IOException {
         criarDiretorio();
-        limparDiretorio();
+        //limparDiretorio();
         return novoDiretorio;
     }
     private static void criarDiretorio() throws IOException {

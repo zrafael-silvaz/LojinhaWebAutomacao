@@ -1,12 +1,12 @@
-package Modulos.Produtos;
+package br.com.rsilva.lojinhawebautomacao2.Tests.Produtos;
 
-import Paginas.LoginPage;
+import br.com.rsilva.lojinhawebautomacao2.Pages.LoginPage;
 
-import Utils.ScreenShot;
+import br.com.rsilva.lojinhawebautomacao2.Utils.GerenciadorWebDriver;
+import br.com.rsilva.lojinhawebautomacao2.Utils.ScreenShot;
+
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Tests Web do Modulo de Produtos")
 public class ProdutosTest {
     private WebDriver driver;
+    private String usuario = "rSilva";
+    private String senha = "123456";
 
     @BeforeAll
     public static void beforeAll() throws IOException {
@@ -23,7 +25,7 @@ public class ProdutosTest {
     }
     @BeforeEach
     void setupTest() throws IOException {
-        driver = WebDriverManager.chromedriver().create();
+        driver = GerenciadorWebDriver.newDrive();
 
         //System.setProperty("webdriver.chrome.driver", "caminho/do/chromedriver");
         //WebDriverManager.chromedriver().setup();
@@ -43,8 +45,8 @@ public class ProdutosTest {
     @DisplayName("Nao e permitido registrar um produto sem um nome")
     public void testNaoEPermitidoRegistrarProdutoSemNome() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("")
@@ -60,8 +62,8 @@ public class ProdutosTest {
     @DisplayName("Nao e permitido registrar um produto sem cor")
     public void testNaoEPermitidoRegistrarProdutoSemCor() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("Mouse")
@@ -72,13 +74,12 @@ public class ProdutosTest {
         ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoSemCor");
         assertEquals("O produto precisa ter uma cor", mensagemApresentada);
     }
-
     @Test
     @DisplayName("Nao e permitido registrar um produto com valor igual a zero")
     public void testNaoEPermitidoRegistrarProdutoValorZerado() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
@@ -89,13 +90,44 @@ public class ProdutosTest {
         ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoValorZerado");
         assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
-
     @Test
-    @DisplayName("Nao permitido registrar produto acima de 7 mil")
+    @DisplayName("É permitido registrar um produto com valor igual a 0,01 - limite")
+    public void testEPermitidoRegistrarProdutoValorUmCentavo() throws IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario(usuario)
+                .informarSenha(senha)
+                .submeterFormularioLogin()
+                .acessarFormAddProduto()
+                .informarNomeProduto("NoteBook")
+                .informarValorProduto("0,01")
+                .informarCoresProduto("Red, blue")
+                .submeterFormularioAdicaoComErro()
+                .capturaMensagemApresentada();
+        ScreenShot.salvarScreenshot(driver, "testEPermitidoRegistrarProdutoValorUmCentavo");
+        assertEquals("Produto adicionado com sucesso", mensagemApresentada);
+    }
+    @Test
+    @DisplayName("É permitido registrar um produto com valor igual a 7.000,00 - limite")
+    public void testEPermitidoRegistrarProdutoValorSeteMil() throws IOException {
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario(usuario)
+                .informarSenha(senha)
+                .submeterFormularioLogin()
+                .acessarFormAddProduto()
+                .informarNomeProduto("NoteBook")
+                .informarValorProduto("700000")
+                .informarCoresProduto("Red, blue")
+                .submeterFormularioAdicaoComErro()
+                .capturaMensagemApresentada();
+        ScreenShot.salvarScreenshot(driver, "testEPermitidoRegistrarProdutoValorSeteMil");
+        assertEquals("Produto adicionado com sucesso", mensagemApresentada);
+    }
+    @Test
+    @DisplayName("Nao permitido registrar produto acima de 7 mil - limite")
     public void testNaoPermiteProdutoValorAcimaSeteMil() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
@@ -108,11 +140,11 @@ public class ProdutosTest {
     }
 
     @Test
-    @DisplayName("Registrando produto com dados validos")
+    @DisplayName("Registrando produto com valor valido - limite")
     public void testAdicionarProdutoValorValido() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
@@ -124,28 +156,28 @@ public class ProdutosTest {
         assertEquals("Produto adicionado com sucesso", mensagemApresentada);
     }
     @Test
-    @DisplayName("Verificando produto adicionado")
-    public void testVerificaProdutoAdicionado() throws IOException {
+    @DisplayName("Verificando mascara do campo valor")
+    public void testVerificaMascaraValor() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
                 .informarValorProduto("500000")
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicao()
-                .verificaProdutoAdicionado("NoteBook","500000","Red, blue");
+                .verificaMascaraValor("5.000,00");
         ScreenShot.salvarScreenshot(driver, "testVerificaProdutoAdicionado");
-        assertEquals("Produto verificado", mensagemApresentada);
+        assertEquals("Produto conforme", mensagemApresentada);
     }
 
     @Test
     @DisplayName("Removendo produto")
     public void testRemoverProduto() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .removerProduto()
                 .capturaMensagemApresentada();
@@ -156,8 +188,8 @@ public class ProdutosTest {
     @DisplayName("Removendo multiplos produtos")
     public void testRemoverMultiplosProdutos() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("Airfryer")
@@ -171,13 +203,12 @@ public class ProdutosTest {
         ScreenShot.salvarScreenshot(driver, "testRemoverMultiplosProdutos");
         assertEquals("Produto removido com sucesso", mensagemApresentada);
     }
-
     @Test
     @DisplayName("Registrando produto com componente")
     public void testAdicionarComponente() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
                 .informarNomeProduto("NoteBook")
@@ -192,13 +223,62 @@ public class ProdutosTest {
         ScreenShot.salvarScreenshot(driver, "testAdicionarComponente");
         assertEquals("Componente de produto adicionado com sucesso", mensagemApresentada);
     }
-
+    @Test
+    @DisplayName("Registrando produto com 8 componentes - limite")
+    public void testAdicionarMultiplosComponentes() throws InterruptedException, IOException {
+        String nomeComponente = "Cabo de Forca";
+        String qtdComponente = "1";
+        String mensagemApresentada = new LoginPage(driver)
+                .informarUsuario(usuario)
+                .informarSenha(senha)
+                .submeterFormularioLogin()
+                .acessarFormAddProduto()
+                .informarNomeProduto("NoteBook")
+                .informarValorProduto("500000")
+                .informarCoresProduto("Red, blue")
+                .submeterFormularioAdicao()
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .adicionarComponente()
+                .submeterMultiplosComponentes(nomeComponente,qtdComponente)
+                .capturaMensagemApresentada();
+        ScreenShot.salvarScreenshot(driver, "testAdicionarComponente");
+        assertEquals("Componente de produto adicionado com sucesso", mensagemApresentada);
+    }
     @Test
     @DisplayName("Registrando produto com componente sem um nome")
     public void testAdicionarComponenteSemNome() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .editandoProduto()
                 .adicionarComponente()
@@ -214,8 +294,8 @@ public class ProdutosTest {
     @DisplayName("Registrando produto e um componente com quantidade zero")
     public void testAdicionarComponenteQTDZero() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .editandoProduto()
                 .adicionarComponente()
@@ -231,8 +311,8 @@ public class ProdutosTest {
     @DisplayName("Cancelando adicao de componente")
     public void testCancelandoAdicaoComponente() throws InterruptedException, IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .editandoProduto()
                 .adicionarComponente()
@@ -248,8 +328,8 @@ public class ProdutosTest {
     @DisplayName("Removendo Componente")
     public void testRemoverComponente() throws InterruptedException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .editandoProduto()
                 .adicionarComponente()
@@ -269,8 +349,8 @@ public class ProdutosTest {
     @DisplayName("Removendo multiplos Componentes")
     public void testRemoverMultiplosComponentes() throws IOException, InterruptedException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rSilva")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .editandoProduto()
                 .adicionarComponente()

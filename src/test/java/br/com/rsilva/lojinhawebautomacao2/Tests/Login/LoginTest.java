@@ -1,8 +1,9 @@
-package Modulos.Login;
+package br.com.rsilva.lojinhawebautomacao2.Tests.Login;
 
-import Paginas.LoginPage;
-import Utils.ScreenShot;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import br.com.rsilva.lojinhawebautomacao2.Pages.LoginPage;
+import br.com.rsilva.lojinhawebautomacao2.Utils.GerenciadorWebDriver;
+import br.com.rsilva.lojinhawebautomacao2.Utils.ScreenShot;
+
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
@@ -20,7 +21,8 @@ public class LoginTest {
     @BeforeEach
     @DisplayName("Construe o driver e testa se esta mesmo na tela de login")
     public void setupTest() {
-        driver = WebDriverManager.chromedriver().create();
+        driver = GerenciadorWebDriver.newDrive();
+
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(4000));
         driver.manage().window().maximize();
         driver.get("http://165.227.93.41/lojinha-web/v2/");
