@@ -14,7 +14,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Tests Web do Modulo de Produtos")
-public class TesteProdutos {
+public class TestProdutos {
     private WebDriver driver;
     private String usuario = "rSilva";
     private String senha = "123456";
@@ -26,10 +26,6 @@ public class TesteProdutos {
     @BeforeEach
     void setupTest() throws IOException {
         driver = GerenciadorWebDriver.newDrive();
-
-        //System.setProperty("webdriver.chrome.driver", "caminho/do/chromedriver");
-        //WebDriverManager.chromedriver().setup();
-        //this.driver = new ChromeDriver();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(2000));
         driver.manage().window().maximize();

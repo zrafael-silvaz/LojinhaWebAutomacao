@@ -22,7 +22,6 @@ public class TestLogin {
     @DisplayName("Construe o driver e testa se esta mesmo na tela de login")
     public void setupTest() {
         driver = GerenciadorWebDriver.newDrive();
-
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(4000));
         driver.manage().window().maximize();
         driver.get("http://165.227.93.41/lojinha-web/v2/");
@@ -35,7 +34,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Verificar se a pagina login foi acessada")
-    public void verificaLoginPage() throws IOException {
+    public void testVerificaLoginPage() throws IOException {
         String element = new LoginPage(driver)
                 .verificaFormularioLogin();
         ScreenShot.salvarScreenshot(driver, "verificaLoginPage");
@@ -44,7 +43,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Submeter formulario login com dados corretos")
-    public void submeterFormularioLogin() throws IOException {
+    public void testSubmeterFormularioLogin() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rsilva")
                 .informarSenha("123456")
@@ -56,7 +55,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Submeter formulario login sem nome de usuario")
-    public void submeterFormularioLoginSemUser() throws IOException {
+    public void testSubmeterFormularioLoginSemUser() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("")
                 .informarSenha("123456")
@@ -68,7 +67,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Submeter formulario login sem senha de usuario")
-    public void submeterFormularioLoginSemSenha() throws IOException {
+    public void testSubmeterFormularioLoginSemSenha() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("srilva")
                 .informarSenha("")
@@ -80,7 +79,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Submeter formulario login com senha invalida")
-    public void submeterFormularioLoginSenhaInvalida() throws IOException {
+    public void testSubmeterFormularioLoginSenhaInvalida() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rsilva")
                 .informarSenha("testInvalido")
@@ -92,7 +91,7 @@ public class TestLogin {
 
     @Test
     @DisplayName("Submeter formulario login com dados invalidos")
-    public void submeterFormularioLoginDadosInvalidos() throws IOException {
+    public void testSubmeterFormularioLoginDadosInvalidos() throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("testInvalido")
                 .informarSenha("testInvalido")
@@ -103,7 +102,7 @@ public class TestLogin {
     }
     @Test
     @DisplayName("Fazendo Logout")
-    public void logOut() {
+    public void testLogOut() {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario("rSilva")
                 .informarSenha("123456")
