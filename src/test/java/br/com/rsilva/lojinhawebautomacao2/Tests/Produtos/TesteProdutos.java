@@ -14,7 +14,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Tests Web do Modulo de Produtos")
-public class ProdutosTest {
+public class TesteProdutos {
     private WebDriver driver;
     private String usuario = "rSilva";
     private String senha = "123456";

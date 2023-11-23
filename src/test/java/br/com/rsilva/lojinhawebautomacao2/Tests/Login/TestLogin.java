@@ -12,7 +12,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginTest {
+public class TestLogin {
     private WebDriver driver;
     @BeforeAll
     public static void beforeAll() throws IOException {
