@@ -5,6 +5,8 @@ import br.com.rsilva.lojinhawebautomacao2.Utils.GerenciadorWebDriver;
 import br.com.rsilva.lojinhawebautomacao2.Utils.ScreenShot;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
@@ -13,13 +15,14 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLogin {
-    private WebDriver driver;
+    private static WebDriver driver;
     @BeforeAll
     public static void beforeAll() throws IOException {
         ScreenShot.criarDiretorio();
     }
     @BeforeEach
     @DisplayName("Construe o driver e testa se esta mesmo na tela de login")
+    @Order(1)
     public void setupTest() {
         driver = GerenciadorWebDriver.newDrive();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(4000));
@@ -53,53 +56,59 @@ public class TestLogin {
         assertEquals("Boas vindas, rafael!", mensagemApresentada);
     }
 
-    @Test
-    @DisplayName("Submeter formulario login sem nome de usuario")
-    public void testSubmeterFormularioLoginSemUser() throws IOException {
+    @ParameterizedTest
+    @CsvSource({
+            "'',123456",
+            "srilva,''",
+            "srilva,testInvalido",
+            "testInvalido,testInvalido"
+    })
+    @DisplayName("Submeter formulario com dados incorretos")
+    public void testSubmeterFormularioLoginSemUser(String usuario, String senha) throws IOException {
         String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("")
-                .informarSenha("123456")
+                .informarUsuario(usuario)
+                .informarSenha(senha)
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
         ScreenShot.salvarScreenshot(driver, "submeterFormularioSemUser");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
 
-    @Test
-    @DisplayName("Submeter formulario login sem senha de usuario")
-    public void testSubmeterFormularioLoginSemSenha() throws IOException {
-        String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("srilva")
-                .informarSenha("")
-                .submeterFormularioLogin()
-                .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSemSenha");
-        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-    }
-
-    @Test
-    @DisplayName("Submeter formulario login com senha invalida")
-    public void testSubmeterFormularioLoginSenhaInvalida() throws IOException {
-        String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("rsilva")
-                .informarSenha("testInvalido")
-                .submeterFormularioLogin()
-                .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSenhaInvalida");
-        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-    }
-
-    @Test
-    @DisplayName("Submeter formulario login com dados invalidos")
-    public void testSubmeterFormularioLoginDadosInvalidos() throws IOException {
-        String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario("testInvalido")
-                .informarSenha("testInvalido")
-                .submeterFormularioLogin()
-                .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginDadosInvalidos");
-        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-    }
+//    @Test
+//    @DisplayName("Submeter formulario login sem senha de usuario")
+//    public void testSubmeterFormularioLoginSemSenha() throws IOException {
+//        String mensagemApresentada = new LoginPage(driver)
+//                .informarUsuario("srilva")
+//                .informarSenha("")
+//                .submeterFormularioLogin()
+//                .capturaMensagemApresentada();
+//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSemSenha");
+//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
+//    }
+//
+//    @Test
+//    @DisplayName("Submeter formulario login com senha invalida")
+//    public void testSubmeterFormularioLoginSenhaInvalida() throws IOException {
+//        String mensagemApresentada = new LoginPage(driver)
+//                .informarUsuario("rsilva")
+//                .informarSenha("testInvalido")
+//                .submeterFormularioLogin()
+//                .capturaMensagemApresentada();
+//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSenhaInvalida");
+//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
+//    }
+//
+//    @Test
+//    @DisplayName("Submeter formulario login com dados invalidos")
+//    public void testSubmeterFormularioLoginDadosInvalidos() throws IOException {
+//        String mensagemApresentada = new LoginPage(driver)
+//                .informarUsuario("testInvalido")
+//                .informarSenha("testInvalido")
+//                .submeterFormularioLogin()
+//                .capturaMensagemApresentada();
+//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginDadosInvalidos");
+//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
+//    }
     @Test
     @DisplayName("Fazendo Logout")
     public void testLogOut() {

@@ -6,6 +6,8 @@ import br.com.rsilva.lojinhawebautomacao2.Utils.GerenciadorWebDriver;
 import br.com.rsilva.lojinhawebautomacao2.Utils.ScreenShot;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
 
 import java.io.IOException;
@@ -70,22 +72,42 @@ public class TestProdutos {
         ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoSemCor");
         assertEquals("O produto precisa ter uma cor", mensagemApresentada);
     }
-    @Test
-    @DisplayName("Nao e permitido registrar um produto com valor igual a zero")
-    public void testNaoEPermitidoRegistrarProdutoValorZerado() throws IOException {
+    @ParameterizedTest
+    @CsvSource({
+            "NoteBook, 0000",
+            "NoteBook, 700100"
+    })
+    @DisplayName("Nao e permitido registrar um produto com valor fora do requisito")
+    public void testNaoEPermitidoRegistrarProdutoValorZerado(String nome, String valor) throws IOException {
         String mensagemApresentada = new LoginPage(driver)
                 .informarUsuario(usuario)
                 .informarSenha(senha)
                 .submeterFormularioLogin()
                 .acessarFormAddProduto()
-                .informarNomeProduto("NoteBook")
-                .informarValorProduto("0000")
+                .informarNomeProduto(nome)
+                .informarValorProduto(valor)
                 .informarCoresProduto("Red, blue")
                 .submeterFormularioAdicaoComErro()
                 .capturaMensagemApresentada();
         ScreenShot.salvarScreenshot(driver, "testNaoEPermitidoRegistrarProdutoValorZerado");
         assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
+//    @Test
+//    @DisplayName("Nao permitido registrar produto acima de 7 mil - limite")
+//    public void testNaoPermiteProdutoValorAcimaSeteMil() throws IOException {
+//        String mensagemApresentada = new LoginPage(driver)
+//                .informarUsuario(usuario)
+//                .informarSenha(senha)
+//                .submeterFormularioLogin()
+//                .acessarFormAddProduto()
+//                .informarNomeProduto("NoteBook")
+//                .informarValorProduto("700100")
+//                .informarCoresProduto("Red, blue")
+//                .submeterFormularioAdicaoComErro()
+//                .capturaMensagemApresentada();
+//        ScreenShot.salvarScreenshot(driver, "testNaoPermiteProdutoValorAcimaSeteMil");
+//        assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
+//    }
     @Test
     @DisplayName("É permitido registrar um produto com valor igual a 0,01 - limite")
     public void testEPermitidoRegistrarProdutoValorUmCentavo() throws IOException {
@@ -117,22 +139,6 @@ public class TestProdutos {
                 .capturaMensagemApresentada();
         ScreenShot.salvarScreenshot(driver, "testEPermitidoRegistrarProdutoValorSeteMil");
         assertEquals("Produto adicionado com sucesso", mensagemApresentada);
-    }
-    @Test
-    @DisplayName("Nao permitido registrar produto acima de 7 mil - limite")
-    public void testNaoPermiteProdutoValorAcimaSeteMil() throws IOException {
-        String mensagemApresentada = new LoginPage(driver)
-                .informarUsuario(usuario)
-                .informarSenha(senha)
-                .submeterFormularioLogin()
-                .acessarFormAddProduto()
-                .informarNomeProduto("NoteBook")
-                .informarValorProduto("700100")
-                .informarCoresProduto("Red, blue")
-                .submeterFormularioAdicaoComErro()
-                .capturaMensagemApresentada();
-        ScreenShot.salvarScreenshot(driver, "testNaoPermiteProdutoValorAcimaSeteMil");
-        assertEquals("O valor do produto deve estar entre R$ 0,01 e R$ 7.000,00", mensagemApresentada);
     }
 
     @Test
