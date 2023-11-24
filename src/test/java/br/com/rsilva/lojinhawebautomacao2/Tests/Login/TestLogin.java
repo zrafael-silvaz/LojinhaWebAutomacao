@@ -73,42 +73,7 @@ public class TestLogin {
         ScreenShot.salvarScreenshot(driver, "submeterFormularioSemUser");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
-
-//    @Test
-//    @DisplayName("Submeter formulario login sem senha de usuario")
-//    public void testSubmeterFormularioLoginSemSenha() throws IOException {
-//        String mensagemApresentada = new LoginPage(driver)
-//                .informarUsuario("srilva")
-//                .informarSenha("")
-//                .submeterFormularioLogin()
-//                .capturaMensagemApresentada();
-//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSemSenha");
-//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-//    }
-//
-//    @Test
-//    @DisplayName("Submeter formulario login com senha invalida")
-//    public void testSubmeterFormularioLoginSenhaInvalida() throws IOException {
-//        String mensagemApresentada = new LoginPage(driver)
-//                .informarUsuario("rsilva")
-//                .informarSenha("testInvalido")
-//                .submeterFormularioLogin()
-//                .capturaMensagemApresentada();
-//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginSenhaInvalida");
-//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-//    }
-//
-//    @Test
-//    @DisplayName("Submeter formulario login com dados invalidos")
-//    public void testSubmeterFormularioLoginDadosInvalidos() throws IOException {
-//        String mensagemApresentada = new LoginPage(driver)
-//                .informarUsuario("testInvalido")
-//                .informarSenha("testInvalido")
-//                .submeterFormularioLogin()
-//                .capturaMensagemApresentada();
-//        ScreenShot.salvarScreenshot(driver, "submeterFormularioLoginDadosInvalidos");
-//        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
-//    }
+    
     @Test
     @DisplayName("Fazendo Logout")
     public void testLogOut() {

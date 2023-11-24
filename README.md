@@ -32,4 +32,4 @@ Para executar os testes, siga os seguintes passos:
 
 ## Observações
 - Certifique-se de ter o Java e o Maven instalados em sua máquina.
-- Não é necesario ter o ChromeDriver instalado, pois é utilizado uma biblioteca de gerenciamento, onde é necessario apenas informar na classe GerenciadorWebDriver qual sera o navegador desejado.
+- Não é necessario ter o ChromeDriver instalado, pois é utilizado uma biblioteca de gerenciamento, onde é necessario apenas informar na classe GerenciadorWebDriver qual sera o navegador desejado.
