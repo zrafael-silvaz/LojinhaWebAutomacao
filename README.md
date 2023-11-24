@@ -1,4 +1,4 @@
-# LojinhaWebAutomacao2
+# LojinhaWebAutomacao
 
 ## Descrição
 Este projeto é um conjunto de testes funcionais automatizados em Java utilizando o framework JUnit e a ferramenta Selenium WebDriver. O projeto contém testes de partição de equivalência e testes de análise de valor limite, além de estar focado nos testes de fumaça.
@@ -26,7 +26,7 @@ O projeto segue os seguintes padrões de testes:
 
 ## Configuração e Execução dos Testes
 Para executar os testes, siga os seguintes passos:
-1. Clone o repositório: git clone https://github.com/zrafaelz/LojinhaWebAutomacao2.git
+1. Clone o repositório: git clone https://github.com/zrafaelz/LojinhaWebAutomacao.git
 2. Abra o projeto em sua IDE de preferência.
 3. Execute a comando `mvn test`.
 
