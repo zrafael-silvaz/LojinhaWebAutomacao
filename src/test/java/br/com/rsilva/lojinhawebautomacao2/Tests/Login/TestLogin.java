@@ -73,7 +73,7 @@ public class TestLogin {
         ScreenShot.salvarScreenshot(driver, "submeterFormularioSemUser");
         assertEquals("Usuario ou senha invalidos", mensagemApresentada);
     }
-    
+
     @Test
     @DisplayName("Fazendo Logout")
     public void testLogOut() {
