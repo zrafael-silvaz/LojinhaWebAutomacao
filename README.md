@@ -26,7 +26,7 @@ O projeto segue os seguintes padrões de testes:
 
 ## Configuração e Execução dos Testes
 Para executar os testes, siga os seguintes passos:
-1. Clone o repositório: git clone https://github.com/zrafaelz/LojinhaWebAutomacao.git
+1. Clone o repositório: git clone https://github.com/zrafael-silvaz/LojinhaWebAutomacao.git
 2. Abra o projeto em sua IDE de preferência.
 3. Execute a comando `mvn test`.
 
