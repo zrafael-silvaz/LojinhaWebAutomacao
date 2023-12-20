@@ -14,6 +14,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Tag("fast")
 public class TestLogin {
     private static WebDriver driver;
     @BeforeAll
@@ -35,6 +36,7 @@ public class TestLogin {
         driver.quit();
     }
 
+    @Tag("fast")
     @Test
     @DisplayName("Verificar se a pagina login foi acessada")
     public void testVerificaLoginPage() throws IOException {
@@ -44,6 +46,7 @@ public class TestLogin {
         assertEquals("Acessar a Lojinha", element);
     }
 
+    @Tag("fast")
     @Test
     @DisplayName("Submeter formulario login com dados corretos")
     public void testSubmeterFormularioLogin() throws IOException {
@@ -71,7 +74,7 @@ public class TestLogin {
                 .submeterFormularioLogin()
                 .capturaMensagemApresentada();
         ScreenShot.salvarScreenshot(driver, "submeterFormularioSemUser");
-        assertEquals("Usuario ou senha invalidos", mensagemApresentada);
+        assertEquals("Falha ao fazer o login", mensagemApresentada);
     }
 
     @Test
